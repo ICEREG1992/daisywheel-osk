@@ -1,0 +1,18 @@
+﻿<Window x:Class="daisywheel_osk.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:daisywheel_osk"
+        mc:Ignorable="d"
+        Title="Daisywheel OSK" Height="320" Width="320" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <local:Wheel x:Name="_wheel" Loaded="_wheel_Loaded" SizeChanged="UpdateSize"/>
+        <TextBlock x:Name="OutputText"
+                   FontFamily="Consolas"
+                   FontSize="14"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   TextAlignment="Left"/>
+    </Grid>
+</Window>
