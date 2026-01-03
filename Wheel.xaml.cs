@@ -44,14 +44,7 @@ namespace daisywheel_osk
 
         public void UpdateWheel()
         {
-            if (ActiveSegment == null)
-            {
-                flower.SelectedPetal = 0;
-            }
-            else
-            {
-                flower.SelectedPetal = (int)ActiveSegment;
-            }
+            flower.SelectedPetal = ActiveSegment;
             flower.UpdateFlower();
         }
 
