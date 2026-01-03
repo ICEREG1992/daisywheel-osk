@@ -1,6 +1,7 @@
 ﻿// Petal.xaml.cs
 using System.Windows.Controls;
 using System.Windows.Media;
+using XInputium.XInput;
 
 namespace daisywheel_osk
 {
@@ -41,7 +42,7 @@ namespace daisywheel_osk
             e.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(PetalColor);
             e.Width = s;
             e.Height = s;
-            
+
             C.Children.Add(e);
 
             // make buttons
@@ -82,7 +83,8 @@ namespace daisywheel_osk
         public void UpdateSize(double s)
         {
             double trueSize = s;
-            if (Activated) {
+            if (Activated)
+            {
                 trueSize = s * 1.1;
             }
             e.Width = trueSize;
@@ -93,7 +95,7 @@ namespace daisywheel_osk
             double buttonSize = getButtonSize(trueSize);
             for (int i = 0; i < ButtonCount; i++)
             {
-                MoveButton(Buttons[i], trueSize, i);  
+                MoveButton(Buttons[i], trueSize, i);
                 Buttons[i].UpdateSize(buttonSize);
             }
         }
@@ -121,6 +123,56 @@ namespace daisywheel_osk
         public double getRadius(double x)
         {
             return x / 2 / 2;
+        }
+
+        internal void HandleButtonPress(XInputButton b)
+        {
+            switch (b.Button)
+            {
+                case XButtons.X:
+                    Buttons[0].Press();
+                    break;
+                case XButtons.Y:
+                    Buttons[1].Press();
+                    break;
+                case XButtons.B:
+                    Buttons[2].Press();
+                    break;
+                case XButtons.A:
+                    Buttons[3].Press();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        internal void HandleButtonRelease()
+        {
+            foreach (Button b in Buttons)
+            {
+                b.Release();
+            }
+        }
+
+        internal void HandleButtonRelease(XInputButton b)
+        {
+            switch (b.Button)
+            {
+                case XButtons.X:
+                    Buttons[0].Release();
+                    break;
+                case XButtons.Y:
+                    Buttons[1].Release();
+                    break;
+                case XButtons.B:
+                    Buttons[2].Release();
+                    break;
+                case XButtons.A:
+                    Buttons[3].Release();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

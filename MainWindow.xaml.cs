@@ -80,7 +80,14 @@ namespace daisywheel_osk
             bool bPressed = _gamepad.Buttons.B.IsPressed;
             bool xPressed = _gamepad.Buttons.X.IsPressed;
             bool yPressed = _gamepad.Buttons.Y.IsPressed;
-
+            _gamepad.ButtonPressed += (s, e) =>
+            {
+                _wheel.HandleButtonPress(e.Button);
+            };
+            _gamepad.ButtonReleased += (s, e) =>
+            {
+                _wheel.HandleButtonRelease(e.Button);
+            };
             OutputText.Text =
                 $"LX: {lx:F3}, LY: {ly:F3}\n" +
                 $"A: {aPressed}, B: {bPressed}\n" +

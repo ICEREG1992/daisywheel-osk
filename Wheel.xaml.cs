@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using XInputium.XInput;
 namespace daisywheel_osk
 {
     public partial class Wheel : UserControl
@@ -43,7 +44,14 @@ namespace daisywheel_osk
 
         public void UpdateWheel()
         {
-            flower.SelectedPetal = ActiveSegment;
+            if (ActiveSegment == null)
+            {
+                flower.SelectedPetal = 0;
+            }
+            else
+            {
+                flower.SelectedPetal = (int)ActiveSegment;
+            }
             flower.UpdateFlower();
         }
 
@@ -63,5 +71,21 @@ namespace daisywheel_osk
         }
 
         private static int Mod(int x, int m) => (x % m + m) % m;
+
+        internal void HandleButtonPress(XInputButton button)
+        {
+            if (Active)
+            {
+                flower.HandleButtonPress(button);
+            }
+        }
+
+        internal void HandleButtonRelease(XInputButton button)
+        {
+            if (Active)
+            {
+                flower.HandleButtonRelease(button);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
+using XInputium.XInput;
 
 namespace daisywheel_osk
 {
@@ -9,7 +10,7 @@ namespace daisywheel_osk
     {
         public Canvas C { get; set; }
         public int SegmentCount { get; }
-        public int? SelectedPetal {  get; set; }
+        public int SelectedPetal {  get; set; }
         private Petal[] Petals { get; set; }
 
         public Flower(int segCount, double size)
@@ -41,6 +42,7 @@ namespace daisywheel_osk
                 else
                 {
                     Petals[i].Activated = false;
+                    Petals[i].HandleButtonRelease();
                 }
                 Petals[i].UpdatePetal();
             }
@@ -80,6 +82,16 @@ namespace daisywheel_osk
         public double getRadius(double x)
         {
             return x / 2 / 1.5;
+        }
+
+        internal void HandleButtonPress(XInputButton b)
+        {
+            Petals[SelectedPetal].HandleButtonPress(b);
+        }
+
+        internal void HandleButtonRelease(XInputButton b)
+        {
+            Petals[SelectedPetal].HandleButtonRelease(b);
         }
     }
 }
