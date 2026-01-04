@@ -11,6 +11,16 @@ namespace daisywheel_osk
         public float Angle { get; set; } = 0;
         public bool Active { get; set; } = true;
 
+        private char[] Alphabet = [
+            'a', 'b', 'c', 'd',
+            'e', 'f', 'g', 'h',
+            'i', 'j', 'k', 'l',
+            'm', 'n', 'o', 'p',
+            'q', 'r', 's', 't',
+            'u', 'v', 'w', 'x',
+            'y', 'z', '?', '!',
+            ';', '/', '&', '-'
+            ];
         private const string WheelColor = "#09273B";
         private readonly Flower flower;
         private readonly System.Windows.Shapes.Ellipse ellipse;
@@ -22,7 +32,8 @@ namespace daisywheel_osk
             ellipse = new System.Windows.Shapes.Ellipse();
             ellipse.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(WheelColor);
 
-            flower = new Flower(SegmentCount, Math.Min(WheelCanvas.ActualWidth, WheelCanvas.ActualHeight));
+            flower = new Flower(SegmentCount, Math.Min(WheelCanvas.ActualWidth, WheelCanvas.ActualHeight), Alphabet);
+            flower.Alphabet = Alphabet;
 
             UpdateSize();
 

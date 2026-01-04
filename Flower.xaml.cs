@@ -1,5 +1,6 @@
 ﻿// Flower.xaml.cs
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 using XInputium.XInput;
@@ -13,8 +14,11 @@ namespace daisywheel_osk
         public int? SelectedPetal {  get; set; }
         private Petal[] Petals { get; set; }
 
-        public Flower(int segCount, double size)
+        public char[] Alphabet { get; set; }
+
+        public Flower(int segCount, double size, char[] c)
         {
+            Alphabet = c;
             SegmentCount = segCount;
             C = new Canvas();
 
@@ -24,7 +28,12 @@ namespace daisywheel_osk
 
             for (int i = 0; i < SegmentCount; i++)
             {
-                Petals[i] = new Petal(petalSize);
+                char[] chars = [Alphabet[i * 4 + 0],
+                    Alphabet[i * 4 + 1],
+                    Alphabet[i * 4 + 2],
+                    Alphabet[i * 4 + 3]
+                ];
+                Petals[i] = new Petal(petalSize, chars);
                 MovePetal(Petals[i], size, i);
                 C.Children.Add(Petals[i].C);
             }
