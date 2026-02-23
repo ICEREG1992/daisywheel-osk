@@ -17,7 +17,7 @@ namespace daisywheel_osk
         static readonly int ButtonCount = 4;
         private Button[] Buttons { get; set; }
 
-        public char[] Chars { get; set; }
+        public LayoutPetal Chars { get; set; }
         private static readonly string[] ButtonColors =
         [
             "#01306B",
@@ -27,7 +27,7 @@ namespace daisywheel_osk
         ];
 
 
-        public Petal(double s, char[] c)
+        public Petal(double s, LayoutPetal c)
         {
             Chars = c;
             C = new Canvas();
@@ -50,7 +50,7 @@ namespace daisywheel_osk
             double buttonSize = getButtonSize(s);
             for (int i = 0; i < ButtonCount; i++)
             {
-                Buttons[i] = new Button(buttonSize, $"{Chars.GetValue(i)}", ButtonColors[i]);
+                Buttons[i] = new Button(buttonSize, Chars.GetChar(i), ButtonColors[i]);
                 MoveButton(Buttons[i], s, i);
                 C.Children.Add(Buttons[i].C);
             }

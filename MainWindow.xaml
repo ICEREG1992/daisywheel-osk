@@ -5,14 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:daisywheel_osk"
         mc:Ignorable="d"
-        Title="Daisywheel OSK" Height="320" Width="320" WindowStartupLocation="CenterScreen">
+        Title="Daisywheel OSK"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Focusable="False"
+        Topmost="True"
+        ShowActivated="False"
+        ShowInTaskbar="False"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <local:Wheel x:Name="_wheel" Loaded="_wheel_Loaded" SizeChanged="UpdateSize"/>
-        <TextBlock x:Name="OutputText"
+        <TextBlock x:Name="DebugText"
                    FontFamily="Consolas"
                    FontSize="14"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    TextAlignment="Left"/>
+        <!-- <local:Tooltips x:Name="_tooltips"/> Loaded="_tooltips_Loaded" SizeChanged="UpdateSize"/> -->
     </Grid>
 </Window>

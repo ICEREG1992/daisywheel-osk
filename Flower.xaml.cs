@@ -1,5 +1,6 @@
 ﻿// Flower.xaml.cs
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
@@ -10,31 +11,29 @@ namespace daisywheel_osk
     public class Flower
     {
         public Canvas C { get; set; }
-        public int SegmentCount { get; }
+        public int SegmentCount { get; set; }
         public int? SelectedPetal {  get; set; }
         private Petal[] Petals { get; set; }
+        private double FlowerSize { get; set; }
+        private double PetalSize { get; set; }   
 
-        public char[] Alphabet { get; set; }
+        public LayoutAlphabet Alphabet { get; set; }
 
-        public Flower(int segCount, double size, char[] c)
+        public Flower(double size, LayoutAlphabet a)
         {
-            Alphabet = c;
-            SegmentCount = segCount;
+            Alphabet = a;
+            SegmentCount = Alphabet.NumPetals;
             C = new Canvas();
 
             Petals = new Petal[SegmentCount];
-
-            double petalSize = getPetalSize(size);
+            FlowerSize = size;
+            PetalSize = getPetalSize(size);
 
             for (int i = 0; i < SegmentCount; i++)
             {
-                char[] chars = [Alphabet[i * 4 + 0],
-                    Alphabet[i * 4 + 1],
-                    Alphabet[i * 4 + 2],
-                    Alphabet[i * 4 + 3]
-                ];
-                Petals[i] = new Petal(petalSize, chars);
-                MovePetal(Petals[i], size, i);
+                LayoutPetal chars = Alphabet.GetPetal(i);
+                Petals[i] = new Petal(PetalSize, chars);
+                MovePetal(Petals[i], i);
                 C.Children.Add(Petals[i].C);
             }
             
@@ -59,28 +58,43 @@ namespace daisywheel_osk
 
         public void UpdateSize(double s)
         {
-            double petalSize = getPetalSize(s);
+            FlowerSize = s;
+            PetalSize = getPetalSize(FlowerSize);
             for (int i = 0; i < SegmentCount; i++)
             {
-                MovePetal(Petals[i], s, i);
-                Petals[i].UpdateSize(petalSize);
+                MovePetal(Petals[i], i);
+                Petals[i].UpdateSize(PetalSize);
             }
         }
 
-        public void MovePetal(Petal p, double s, int i)
+        public void UpdateAlphabet()
         {
-            double center = s / 2;
+            C.Children.Clear();
+            SegmentCount = Alphabet.NumPetals;
+            Petals = new Petal[SegmentCount];
+            for (int i = 0; i < SegmentCount; i++)
+            {
+                LayoutPetal chars = Alphabet.GetPetal(i);
+                Petals[i] = new Petal(PetalSize, chars);
+                MovePetal(Petals[i], i);
+                C.Children.Add(Petals[i].C);
+            }
+            UpdateFlower();
+        }
+
+        public void MovePetal(Petal p, int i)
+        {
+            double center = FlowerSize / 2;
             
-            double radius = getRadius(s);
-            double petalSize = getPetalSize(s);
+            double radius = getRadius(FlowerSize);
 
             double angle = 2 * Math.PI * i / SegmentCount;
                 // Place the petal so its center lies on the circle
-            int x = (int)(center + radius * Math.Sin(angle) - petalSize / 2);
-            int y = (int)(center + radius * -1 * Math.Cos(angle) - petalSize / 2);
+            int x = (int)(center + radius * Math.Sin(angle) - PetalSize / 2);
+            int y = (int)(center + radius * -1 * Math.Cos(angle) - PetalSize / 2);
             Canvas.SetLeft(Petals[i].C, x);
             Canvas.SetTop(Petals[i].C, y);
-                Petals[i].UpdateSize(petalSize);
+            Petals[i].UpdateSize(PetalSize);
         }
 
         public double getPetalSize(double x)
