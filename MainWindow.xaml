@@ -16,13 +16,16 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <local:Wheel x:Name="_wheel" Loaded="_wheel_Loaded" SizeChanged="UpdateSize"/>
+        <local:Wheel x:Name="_wheel" SizeChanged="UpdateSize"/>
         <TextBlock x:Name="DebugText"
                    FontFamily="Consolas"
                    FontSize="14"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    TextAlignment="Left"/>
-        <!-- <local:Tooltips x:Name="_tooltips"/> Loaded="_tooltips_Loaded" SizeChanged="UpdateSize"/> -->
+        <local:Tooltips x:Name="_tooltips"
+                SizeChanged="UpdateSize"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"/>
     </Grid>
 </Window>

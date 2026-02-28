@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="daisywheel_osk.Tooltip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="#CC1e1e1e"
+        CornerRadius="4"
+        Padding="8,4">
+        <StackPanel Orientation="Horizontal">
+            <Canvas x:Name="_canvas"
+                Width="16"
+                Height="16"
+                Margin="0,0,8,0"
+                IsHitTestVisible="False"/>
+            <TextBlock x:Name="_text"
+                   Foreground="White"
+                   FontFamily="Consolas"
+                   FontSize="16"/>
+        </StackPanel>
+    </Border>
+</UserControl>

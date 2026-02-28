@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="daisywheel_osk.Tooltips"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <Canvas x:Name="TooltipsCanvas"/>
-    </Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:daisywheel_osk">
+    <Viewbox Stretch="Uniform">
+        <Canvas x:Name="_canvas" Width="1280" Height="720"/>
+    </Viewbox>
 </UserControl>

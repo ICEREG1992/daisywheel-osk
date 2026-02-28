@@ -22,6 +22,8 @@ namespace DaisywheelOsk
     {
         public bool StartOnBoot { get; set; } = false;
         public float Opacity { get; set; } = 100;
+        public float BackgroundOpacity { get; set; } = 100;
+        public float Size { get; set; } = 75;
         public string Theme { get; set; } = "default";
         public string Layout { get; set; } = "default";
         // Add more settings here...

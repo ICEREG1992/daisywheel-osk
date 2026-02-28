@@ -189,11 +189,7 @@ namespace daisywheel_osk
         private void UpdateSize(object sender, SizeChangedEventArgs e)
         {
             _wheel.UpdateSize();
-        }
-
-        private void _wheel_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            _tooltips.UpdateSize(ActualWidth, ActualHeight);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

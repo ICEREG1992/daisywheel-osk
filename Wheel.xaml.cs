@@ -31,6 +31,7 @@ namespace daisywheel_osk
             ellipse.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(WheelColor);
 
             flower = new Flower(Math.Min(WheelCanvas.ActualWidth, WheelCanvas.ActualHeight), LayoutAlphabet.blankAlphabet);
+            Size = SettingsStore.Instance.Settings.Size;
 
             UpdateSize();
 
