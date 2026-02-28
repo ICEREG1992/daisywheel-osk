@@ -50,7 +50,7 @@ namespace daisywheel_osk
             double buttonSize = getButtonSize(s);
             for (int i = 0; i < ButtonCount; i++)
             {
-                Buttons[i] = new Button(buttonSize, Chars.GetChar(i), ButtonColors[i]);
+                Buttons[i] = new Button(buttonSize, Chars.GetChar(i), ButtonColors[i], Chars.GetChar(i));
                 MoveButton(Buttons[i], s, i);
                 C.Children.Add(Buttons[i].C);
             }

@@ -45,10 +45,12 @@ namespace daisywheel_osk
             _gamepad.ButtonPressed += (s, e) =>
             {
                 _wheel.HandleButtonPress(e.Button);
+                _tooltips.HandleButtonPress(e.Button, _wheel.Active);
             };
             _gamepad.ButtonReleased += (s, e) =>
             {
                 _wheel.HandleButtonRelease(e.Button);
+                _tooltips.HandleButtonRelease(e.Button, _wheel.Active);
             };
             XInputium.DigitalButton leftTrigger = _gamepad.LeftTrigger.ToDigitalButton(0.5f);
             XInputium.DigitalButton rightTrigger = _gamepad.RightTrigger.ToDigitalButton(0.5f);

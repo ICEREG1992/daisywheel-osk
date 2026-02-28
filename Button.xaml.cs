@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using YamlDotNet.Core.Tokens;
 
 namespace daisywheel_osk
 {
@@ -12,10 +13,11 @@ namespace daisywheel_osk
         public Canvas C;
         public bool Pressed = false;
         public bool Focused = false;
+        public string Key { get; set; }
 
         private System.Windows.Shapes.Ellipse e { get; set; }
         private Viewbox viewbox { get; set; }
-        private TextBlock text { get; set; }
+        public TextBlock text { get; set; }
 
         private const string ButtonColor = "#0D2F47";
         private string color { get; set; } = "#0D2F47";
@@ -43,8 +45,9 @@ namespace daisywheel_osk
         private const uint KEYEVENTF_UNICODE = 0x0004;
         private const uint KEYEVENTF_KEYUP = 0x0002;
 
-        public Button(double s, string t, string c)
+        public Button(double s, string t, string c, string key)
         {
+            Key = key;
             C = new Canvas
             {
                 Width = s,
@@ -84,40 +87,48 @@ namespace daisywheel_osk
             if (Pressed) return;
             System.Diagnostics.Debug.WriteLine($"INPUT size: {Marshal.SizeOf(typeof(INPUT))}");
             Pressed = true;
-            // send keypress event
-            System.Diagnostics.Debug.WriteLine($"Press() called with text: '{text.Text}'");
-            if (text.Text.Length == 0) return;
-            char ch = text.Text[0];
+            System.Diagnostics.Debug.WriteLine($"Press() called with key: '{Key}'");
+            if (Key.Length == 0) return;
+            char ch = Key[0];
             System.Diagnostics.Debug.WriteLine($"Sending char: '{ch}' (Unicode: {(int)ch})");
+
+            // use virtual key codes for control characters, otherwise use Unicode
+            ushort vk = ch switch
+            {
+                '\b' => 0x08, // VK_BACK
+                '\r' => 0x0D, // VK_RETURN
+                '\t' => 0x09, // VK_TAB
+                _ => 0
+            };
+            bool useVk = vk != 0;
 
             INPUT[] inputs = new INPUT[]
             {
-                new INPUT
-                {
-                    type = INPUT_KEYBOARD,
-                    ki = new KEYBDINPUT
-                    {
-                        wVk = 0,
-                        wScan = ch,
-                        dwFlags = KEYEVENTF_UNICODE,
-                        time = 0,
-                        dwExtraInfo = 0
-                    }
-                },
-                new INPUT
-                {
-                    type = INPUT_KEYBOARD,
-                    ki = new KEYBDINPUT
-                    {
-                        wVk = 0,
-                        wScan = ch,
-                        dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP,
-                        time = 0,
-                        dwExtraInfo = 0
-                    }
-                }
+        new INPUT
+        {
+            type = INPUT_KEYBOARD,
+            ki = new KEYBDINPUT
+            {
+                wVk = useVk ? vk : (ushort)0,
+                wScan = useVk ? (ushort)0 : ch,
+                dwFlags = useVk ? 0 : KEYEVENTF_UNICODE,
+                time = 0,
+                dwExtraInfo = 0
+            }
+        },
+        new INPUT
+        {
+            type = INPUT_KEYBOARD,
+            ki = new KEYBDINPUT
+            {
+                wVk = useVk ? vk : (ushort)0,
+                wScan = useVk ? (ushort)0 : ch,
+                dwFlags = useVk ? KEYEVENTF_KEYUP : KEYEVENTF_UNICODE | KEYEVENTF_KEYUP,
+                time = 0,
+                dwExtraInfo = 0
+            }
+        }
             };
-
             uint result = SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
             Debug.WriteLine($"SendInput result: {result}, LastError: {Marshal.GetLastWin32Error()}");
         }
