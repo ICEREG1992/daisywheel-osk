@@ -24,8 +24,8 @@ namespace DaisywheelOsk
         public float Opacity { get; set; } = 100;
         public float BackgroundOpacity { get; set; } = 100;
         public float Size { get; set; } = 75;
-        public string Theme { get; set; } = "default";
-        public string Layout { get; set; } = "default";
+        public string Theme { get; set; } = "default_theme";
+        public string Layout { get; set; } = "default_layout";
         // Add more settings here...
     }
 

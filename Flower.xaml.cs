@@ -45,11 +45,11 @@ namespace daisywheel_osk
             {
                 if (i == SelectedPetal)
                 {
-                    Petals[i].Activated = true;
+                    Petals[i].Selected = true;
                 } 
                 else
                 {
-                    Petals[i].Activated = false;
+                    Petals[i].Selected = false;
                     Petals[i].HandleButtonRelease();
                 }
                 Petals[i].UpdatePetal();

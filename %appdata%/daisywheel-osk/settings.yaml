@@ -2,5 +2,5 @@ startOnBoot: false
 opacity: 100
 backgroundOpacity: 100
 size: 75
-theme: default
-layout: default
+theme: default_theme
+layout: default_layout

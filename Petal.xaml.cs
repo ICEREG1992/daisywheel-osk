@@ -8,12 +8,12 @@ namespace daisywheel_osk
     public class Petal
     {
         public Canvas C { get; set; }
-        public bool Activated { get; set; }
+        public bool Selected { get; set; }
 
         private System.Windows.Shapes.Ellipse e { get; set; }
 
         private const string PetalColor = "#0D2F47";
-        private const string ActivatedColor = "#154E77";
+        private const string SelectedColor = "#154E77";
         static readonly int ButtonCount = 4;
         private Button[] Buttons { get; set; }
 
@@ -58,9 +58,9 @@ namespace daisywheel_osk
 
         public void UpdatePetal()
         {
-            if (Activated)
+            if (Selected)
             {
-                e.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(ActivatedColor);
+                e.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(SelectedColor);
                 for (int i = 0; i < ButtonCount; ++i)
                 {
                     Buttons[i].Focused = true;
@@ -81,7 +81,7 @@ namespace daisywheel_osk
         public void UpdateSize(double s)
         {
             double trueSize = s;
-            if (Activated)
+            if (Selected)
             {
                 trueSize = s * 1.1;
             }
